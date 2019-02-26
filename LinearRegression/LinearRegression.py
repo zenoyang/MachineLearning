@@ -28,12 +28,12 @@ def loadDataSet(fileName):
     dataMat = []
     labelMat = []
     fr = open(fileName)
-    first_line = True
+    # first_line = True
     for line in fr.readlines():
-        # 跳过行头
-        if first_line:
-            first_line = False
-            continue
+        # # 跳过行头
+        # if first_line:
+        #     first_line = False
+        #     continue
         # 读取每一行
         lineArr = []
         # 删除一行中以tab分隔的数据前后的空白符号
@@ -501,8 +501,9 @@ def regression1():
 
 
 def regression2():
-    xArr, yArr = loadDataSet("data/8.Regression/data.txt")
-    yHat = lwlrTest(xArr, xArr, yArr, 0.003)
+    xArr, yArr = loadDataSet("./data.txt")
+    # yHat = lwlrTest(xArr, xArr, yArr, 0.003)
+    yHat = lwlrTest(xArr, xArr, yArr, 0.01)
     xMat = mat(xArr)
     srtInd = xMat[:, 1].argsort(0)  # argsort()函数是将x中的元素从小到大排列，提取其对应的index(索引)，然后输出
     xSort = xMat[srtInd][:, 0, :]
@@ -524,7 +525,7 @@ def abaloneTest():
         None
     '''
     # 加载数据
-    abX, abY = loadDataSet("data/8.Regression/abalone.txt")
+    abX, abY = loadDataSet("./abalone.txt")
     # 使用不同的核进行预测
     oldyHat01 = lwlrTest(abX[0:99], abX[0:99], abY[0:99], 0.1)
     oldyHat1 = lwlrTest(abX[0:99], abX[0:99], abY[0:99], 1)
@@ -550,7 +551,7 @@ def abaloneTest():
 
 # test for ridgeRegression
 def regression3():
-    abX, abY = loadDataSet("data/8.Regression/abalone.txt")
+    abX, abY = loadDataSet("./abalone.txt")
     ridgeWeights = ridgeTest(abX, abY)
     fig = plt.figure()
     ax = fig.add_subplot(111)
@@ -560,7 +561,7 @@ def regression3():
 
 # test for stageWise
 def regression4():
-    xArr, yArr = loadDataSet("data/8.Regression/abalone.txt")
+    xArr, yArr = loadDataSet("./abalone.txt")
     stageWise(xArr, yArr, 0.01, 200)
     xMat = mat(xArr)
     yMat = mat(yArr).T
@@ -580,10 +581,9 @@ def regression5():
 
 
 if __name__ == '__main__':
-    regression1()
+    # regression1()
     # regression2()
-    # abaloneTest()
+    abaloneTest()
     # regression3()
     # regression4()
     # regression5()
-    pass
