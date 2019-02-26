@@ -28,7 +28,12 @@ def loadDataSet(fileName):
     dataMat = []
     labelMat = []
     fr = open(fileName)
+    first_line = True
     for line in fr.readlines():
+        # 跳过行头
+        if first_line:
+            first_line = False
+            continue
         # 读取每一行
         lineArr = []
         # 删除一行中以tab分隔的数据前后的空白符号
@@ -404,7 +409,7 @@ def scrapePage(retX, retY, inFile, yr, numPce, origPrc):
         # 查找是否已经标志出售，我们只收集已出售的数据
         soldUnicde = currentRow[0].findAll('td')[3].findAll('span')
         if len(soldUnicde)==0:
-            print ("item #%d did not sell" % i)
+            print("item #%d did not sell" % i)
         else:
             # 解析页面获取当前价格
             soldPrice = currentRow[0].findAll('td')[4]
@@ -481,7 +486,7 @@ def crossValidation(xArr,yArr,numVal=10):
 
 # test for standRegression
 def regression1():
-    xArr, yArr = loadDataSet("data/8.Regression/data.txt")
+    xArr, yArr = loadDataSet("./data.txt")
     xMat = mat(xArr)
     yMat = mat(yArr)
     ws = standRegres(xArr, yArr)
@@ -575,7 +580,7 @@ def regression5():
 
 
 if __name__ == '__main__':
-    # regression1()
+    regression1()
     # regression2()
     # abaloneTest()
     # regression3()
