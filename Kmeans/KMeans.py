@@ -79,14 +79,10 @@ def biKMeans(dataMat, k, distMeas=distEclud):
     while (len(centList) < k):  # 当质心数量小于 k 时
         lowestSSE = inf
         for i in range(len(centList)):  # 对每一个质心
-            ptsInCurrCluster = dataMat[nonzero(
-                clusterAssment[:, 0].A == i)[0], :]  # 获取当前簇 i 下的所有数据点
-            centroidMat, splitClustAss = kMeans(
-                ptsInCurrCluster, 2, distMeas)  # 将当前簇 i 进行二分 kMeans 处理
+            ptsInCurrCluster = dataMat[nonzero(clusterAssment[:, 0].A == i)[0], :]  # 获取当前簇 i 下的所有数据点
+            centroidMat, splitClustAss = kMeans(ptsInCurrCluster, 2, distMeas)  # 将当前簇 i 进行二分 kMeans 处理
             sseSplit = sum(splitClustAss[:, 1])  # 将二分 kMeans 结果中的平方和的距离进行求和
-            sseNotSplit = sum(
-                clusterAssment[nonzero(clusterAssment[:, 0].A != i)[0],
-                               1])  # 将未参与二分 kMeans 分配结果中的平方和的距离进行求和
+            sseNotSplit = sum(clusterAssment[nonzero(clusterAssment[:, 0].A != i)[0], 1])  # 将未参与二分 kMeans 分配结果中的平方和的距离进行求和
             print("sseSplit, and notSplit: ", sseSplit, sseNotSplit)
             if (sseSplit + sseNotSplit) < lowestSSE:
                 bestCentToSplit = i
@@ -95,17 +91,13 @@ def biKMeans(dataMat, k, distMeas=distEclud):
                 lowestSSE = sseSplit + sseNotSplit
         # 找出最好的簇分配结果
         bestClustAss[nonzero(bestClustAss[:, 0].A == 1)[0], 0] = len(centList)  # 调用二分 kMeans 的结果，默认簇是 0,1. 当然也可以改成其它的数字
-        bestClustAss[nonzero(bestClustAss[:, 0].A == 0)[0],
-                     0] = bestCentToSplit  # 更新为最佳质心
+        bestClustAss[nonzero(bestClustAss[:, 0].A == 0)[0], 0] = bestCentToSplit  # 更新为最佳质心
         print('the bestCentToSplit is: ', bestCentToSplit)
         print('the len of bestClustAss is: ', len(bestClustAss))
         # 更新质心列表
-        centList[bestCentToSplit] = bestNewCents[0, :].tolist()[
-            0]  # 更新原质心 list 中的第 i 个质心为使用二分 kMeans 后 bestNewCents 的第一个质心
-        centList.append(
-            bestNewCents[1, :].tolist()[0])  # 添加 bestNewCents 的第二个质心
-        clusterAssment[nonzero(clusterAssment[:, 0].A == bestCentToSplit)[
-            0], :] = bestClustAss  # 重新分配最好簇下的数据（质心）以及SSE
+        centList[bestCentToSplit] = bestNewCents[0, :].tolist()[0]  # 更新原质心 list 中的第 i 个质心为使用二分 kMeans 后 bestNewCents 的第一个质心
+        centList.append(bestNewCents[1, :].tolist()[0])  # 添加 bestNewCents 的第二个质心
+        clusterAssment[nonzero(clusterAssment[:, 0].A == bestCentToSplit)[0], :] = bestClustAss  # 重新分配最好簇下的数据（质心）以及SSE
     return mat(centList), clusterAssment
 
 
@@ -154,7 +146,7 @@ if __name__ == "__main__":
     # testBasicFunc()
 
     # 测试 kMeans 函数
-    testKMeans()
+    # testKMeans()
 
     # 测试二分 biKMeans 函数
-    # testBiKMeans()
+    testBiKMeans()
