@@ -3,9 +3,10 @@ __pychche__
 *~
 *.pyc
 .ipynb_checkpoints
-GraduationProject
+GraduationProject/data
 new_data.7z
 new_data
 result.csv
 *.csv
 data
+Pandas
