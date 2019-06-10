@@ -21,7 +21,7 @@ def getEta(xArr):
         else:
             count = 0
             for j in range(i, -1, -1):
-                if j < 1: continue
+                # if j < 1: continue
                 if xArr[i] == xArr[j - 1]:
                     count += 1
                     continue
@@ -44,10 +44,6 @@ def failRate(xArr):
     x = xMat
 
     alpha, beta, lamda = 0.5384, 0.1967, 0.8499
-
-    """概率密度函数"""
-    # res = ((c*np.power(xMat,a-1))/(n*np.power(1-xMat,b+1)))*\
-    #           ((b-a)*xMat+c)*np.exp(-1*((c*np.power(xMat, a))/np.power(1-xMat, b)))
 
     """故障率函数"""
     res = ((lamda*np.power(x, alpha-1))/(eta*np.power(1-x, beta+1)))*((beta-alpha)*x+alpha)
@@ -72,7 +68,7 @@ def distinct(xArr, yArr):
 def quadraticFeaturizer(x, y):
 
     poly_reg = Pipeline([
-        ('poly', PolynomialFeatures(degree=10)),
+        ('poly', PolynomialFeatures(degree=4)),
         ('std_scaler', StandardScaler()),
         ('lin_reg', LinearRegression())
     ])
@@ -89,9 +85,11 @@ def quadraticFeaturizer(x, y):
 
 
 if __name__ == '__main__':
-    xArr = [0.1, 0.2, 1, 1, 1, 1, 1, 2, 3, 6, 7, 11, 12, 18, 18, 18, 18, 18, 21, 32, 36, 40, 45,
-            46, 47, 50, 55, 60, 63, 63, 67, 67, 67, 67, 72, 75, 79, 82, 82, 83, 84, 84, 84, 85,
-            85, 85, 85, 85, 86, 86]
+    # xArr = [0.1, 0.2, 1, 1, 1, 1, 1, 2, 3, 6, 7, 11, 12, 18, 18, 18, 18, 18, 21, 32, 36, 40, 45,
+    #         46, 47, 50, 55, 60, 63, 63, 67, 67, 67, 67, 72, 75, 79, 82, 82, 83, 84, 84, 84, 85,
+    #         85, 85, 85, 85, 86, 86]
+    xArr = [1, 1, 1, 1, 2, 2, 2, 3, 3, 5, 6, 8, 11, 15, 19, 25, 29, 38, 44, 49, 53, 56, 57, 57, 58, 58, 59, 59, 59, 60,
+            60, 60, 60]
     yArr = failRate(xArr)
     X, y = distinct(xArr, yArr)
 
